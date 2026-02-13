@@ -18,8 +18,8 @@ public class CalculatorController {
     private final CalculatorService calculatorService;
 
     @PostMapping("/calculate")
-    public ResponseEntity<ResponseDTO> calculate(@RequestBody @Valid RequestDTO requestDTO){
-
+    public ResponseEntity<ResponseDTO> calculate(@Valid @RequestBody RequestDTO requestDTO){
+        log.info("Calculate Method entered");
         Double result = calculatorService.calculate(requestDTO);
         ResponseDTO response=new ResponseDTO(result,"Successful",true);
         return new ResponseEntity<>(response,HttpStatus.OK);
