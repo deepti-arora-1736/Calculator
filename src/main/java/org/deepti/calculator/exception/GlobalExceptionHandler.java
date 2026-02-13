@@ -38,3 +38,4 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ResponseDTO(null,"Internal Server Error",false), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
+
