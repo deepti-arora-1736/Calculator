@@ -1,5 +1,6 @@
 package org.deepti.calculator.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.deepti.calculator.dto.RequestDTO;
@@ -16,39 +17,48 @@ public class CalculatorController {
 
     private final CalculatorService calculatorService;
 
-    @PostMapping("/add")
-    public ResponseEntity<ResponseDTO> add(@RequestBody RequestDTO requestDTO){
-        log.info("Adding {}", requestDTO);
-        Double result=calculatorService.add(requestDTO);
-        log.info("Added Successfully");
+    @PostMapping("/calculate")
+    public ResponseEntity<ResponseDTO> calculate(@RequestBody @Valid RequestDTO requestDTO){
+
+        Double result = calculatorService.calculate(requestDTO);
         ResponseDTO response=new ResponseDTO(result,"Successful",true);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    @PostMapping("/subtract")
-    public ResponseEntity<ResponseDTO> subtract(@RequestBody RequestDTO requestDTO){
-        log.info("Subtracting {}", requestDTO);
-        Double result=calculatorService.subtract(requestDTO);
-        log.info("Subtracted Successfully");
-        ResponseDTO response=new ResponseDTO(result,"Successful",true);
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
-
-    @PostMapping("/multiply")
-    public ResponseEntity<ResponseDTO> multiply(@RequestBody RequestDTO requestDTO){
-        log.info("Multiplying {}",requestDTO);
-        Double result=calculatorService.multiply(requestDTO);
-        log.info("Multiplication Successful");
-        ResponseDTO response=new ResponseDTO(result,"Successful",true);
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
-
-    @PostMapping("/divide")
-    public ResponseEntity<ResponseDTO> divide(@RequestBody RequestDTO requestDTO){
-        log.info("Dividing {} ",requestDTO);
-        Double result=calculatorService.divide(requestDTO);
-        log.info("Divided Successfully");
-        ResponseDTO response=new ResponseDTO(result,"Successful",true);
-        return new ResponseEntity<>(response,HttpStatus.OK);
-    }
+//
+//    @PostMapping("/add")
+//    public ResponseEntity<ResponseDTO> add(@RequestBody RequestDTO requestDTO){
+//        log.info("Adding {}", requestDTO);
+//        Double result=calculatorService.add(requestDTO);
+//        log.info("Added Successfully");
+//        ResponseDTO response=new ResponseDTO(result,"Successful",true);
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/subtract")
+//    public ResponseEntity<ResponseDTO> subtract(@RequestBody RequestDTO requestDTO){
+//        log.info("Subtracting {}", requestDTO);
+//        Double result=calculatorService.subtract(requestDTO);
+//        log.info("Subtracted Successfully");
+//        ResponseDTO response=new ResponseDTO(result,"Successful",true);
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/multiply")
+//    public ResponseEntity<ResponseDTO> multiply(@RequestBody RequestDTO requestDTO){
+//        log.info("Multiplying {}",requestDTO);
+//        Double result=calculatorService.multiply(requestDTO);
+//        log.info("Multiplication Successful");
+//        ResponseDTO response=new ResponseDTO(result,"Successful",true);
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/divide")
+//    public ResponseEntity<ResponseDTO> divide(@RequestBody RequestDTO requestDTO){
+//        log.info("Dividing {} ",requestDTO);
+//        Double result=calculatorService.divide(requestDTO);
+//        log.info("Divided Successfully");
+//        ResponseDTO response=new ResponseDTO(result,"Successful",true);
+//        return new ResponseEntity<>(response,HttpStatus.OK);
+//    }
 }

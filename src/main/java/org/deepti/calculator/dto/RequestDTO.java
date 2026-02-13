@@ -13,5 +13,8 @@ public class RequestDTO {
     @NotNull(message="it cannot be null")
     private Double b;
 
+    @NotNull(message="it cannot be null")
+    private Operation operation;
+
 
 }

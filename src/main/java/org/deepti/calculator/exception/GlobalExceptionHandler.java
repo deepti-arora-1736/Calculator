@@ -26,6 +26,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ResponseDTO(null,"Less parameters",false), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ResponseDTO> handleMissingOperation(NullPointerException ex) {
+        log.warn(ex.getMessage());
+        return new ResponseEntity<>(new ResponseDTO(null,"Invalid Operation",false), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ResponseDTO> handleInvalidParams(MethodArgumentTypeMismatchException ex) {
         log.warn(ex.getMessage());
