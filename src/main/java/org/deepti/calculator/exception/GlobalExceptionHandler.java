@@ -8,6 +8,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
 @Slf4j
@@ -31,11 +32,13 @@ public class GlobalExceptionHandler {
         log.warn("handleJsonParseError: {}",ex.getMessage());
         return new ResponseEntity<>(new ResponseDTO(null,"Invalid Parameter",false), HttpStatus.BAD_REQUEST);
     }
-/*
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseDTO> handleGeneralException(Exception ex) {
-        log.error(ex.getMessage());
-        return new ResponseEntity<>(new ResponseDTO(null,"Internal Server Error",false), HttpStatus.INTERNAL_SERVER_ERROR);
-    }*/
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ResponseDTO> handleTypeMismatchError(MethodArgumentTypeMismatchException ex) {
+        log.warn("handleTypeMismatchError: {}",ex.getMessage());
+        return new ResponseEntity<>(new ResponseDTO(null,"Invalid",false), HttpStatus.BAD_REQUEST);
+    }
+
+
 }
 

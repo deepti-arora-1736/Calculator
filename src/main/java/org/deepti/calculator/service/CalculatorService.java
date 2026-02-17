@@ -1,19 +1,27 @@
 package org.deepti.calculator.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.deepti.calculator.dto.Operation;
 import org.deepti.calculator.dto.RequestDTO;
+import org.deepti.calculator.entity.Calculation;
+import org.deepti.calculator.repository.CalculationRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class CalculatorService {
+
+    private final CalculationRepository calculationRepository;
 
     public Double calculate(RequestDTO requestDTO) {
 
-        log.info("Calculate in Service");
+        log.info("Calculate(Service)");
+
         Operation operation=requestDTO.getOperation();
-        log.info("Calculate in Service after get");
         Double result=null;
 
         log.info("Operation : {}",operation);
@@ -44,29 +52,26 @@ public class CalculatorService {
 
         }
 
-        log.info("returning result");
+        log.info("Saving to database");
+
+        Calculation calculation = new Calculation();
+        calculation.setA(requestDTO.getA());
+        calculation.setB(requestDTO.getB());
+        calculation.setOperation(operation);
+        calculation.setResult(result);
+
+        calculationRepository.save(calculation);
+
+        log.info("saved and now returning result");
 
         return result;
 
     }
 
-//    public Double add(RequestDTO requestDTO) {
-//        return requestDTO.getA() + requestDTO.getB();
-//    }
-//
-//    public Double subtract(RequestDTO requestDTO) {
-//        return requestDTO.getA() - requestDTO.getB();
-//    }
-//
-//    public Double multiply(RequestDTO requestDTO) {
-//        return requestDTO.getA() * requestDTO.getB();
-//    }
-//
-//    public Double divide(RequestDTO requestDTO) {
-//        if (requestDTO.getB() == 0) {
-//            log.warn("Attempted to divide by zero {} {}",requestDTO.getA(),requestDTO.getB());
-//            throw new ArithmeticException("Cannot divide by zero");
-//        }
-//        return requestDTO.getA() / requestDTO.getB();
-//    }
+    public List<Calculation> getByOperation(Operation operation) {
+        log.info("Fetching calculations for operation: {}", operation);
+        return calculationRepository.findByOperation(operation);
+    }
+
+
 }
