@@ -12,4 +12,5 @@ public interface CalculationRepository
         extends JpaRepository<Calculation, Long> {
 
     List<Calculation> findByOperation(Operation operation);
+    List<Calculation> findAll();
 }

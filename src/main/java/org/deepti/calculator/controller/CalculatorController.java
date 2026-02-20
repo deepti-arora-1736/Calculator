@@ -8,7 +8,6 @@ import org.deepti.calculator.dto.RequestDTO;
 import org.deepti.calculator.dto.ResponseDTO;
 import org.deepti.calculator.entity.Calculation;
 import org.deepti.calculator.service.CalculatorService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +26,20 @@ public class CalculatorController {
         log.info("Calculator (Controller)");
         Double result = calculatorService.calculate(requestDTO);
         ResponseDTO response=new ResponseDTO(result,"Successful",true);
-        return new ResponseEntity<>(response,HttpStatus.OK);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getOPerations/{operation}")
+    @GetMapping("/getOperations/{operation}")
     public ResponseEntity<List<Calculation>> getByOperation(@PathVariable Operation operation) {
         log.info("Fetching calculations for operation: {}", operation);
         List<Calculation> result = calculatorService.getByOperation(operation);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/getOperations")
+    public ResponseEntity<List<Calculation>> getOperations() {
+        log.info("Fetching calculations for operation: ");
+        List<Calculation> result = calculatorService.getAllOperations();
         return ResponseEntity.ok(result);
     }
 

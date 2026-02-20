@@ -28,19 +28,19 @@ public class CalculatorService {
 
         switch (operation){
 
-            case ADD -> {
+            case add -> {
                 log.info("ADD");
                 result = requestDTO.getA() + requestDTO.getB();
             }
-            case SUBTRACT -> {
+            case subtract -> {
                 log.info("SUBTRACT");
                 result = requestDTO.getA() - requestDTO.getB();
             }
-            case MULTIPLY -> {
+            case multiply -> {
                 log.info("MULTIPLY");
                 result = requestDTO.getA() * requestDTO.getB();
             }
-            case DIVIDE -> {
+            case divide -> {
                 log.info("DIVIDE");
                 if (requestDTO.getB() == 0) {
                     log.warn("Attempted to divide by zero {} {}",requestDTO.getA(),requestDTO.getB());
@@ -72,6 +72,13 @@ public class CalculatorService {
         log.info("Fetching calculations for operation: {}", operation);
         return calculationRepository.findByOperation(operation);
     }
+
+    public List<Calculation> getAllOperations() {
+        log.info("Fetching all calculations");
+        return calculationRepository.findAll();
+    }
+
+
 
 
 }
